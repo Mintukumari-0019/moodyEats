@@ -1,9 +1,18 @@
 import React, { useContext, useState } from 'react';
 import './Navbar.css';
-import { assets } from '../../assets/assets';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { StoreContext } from '../../Context/StoreContext';
 import { toast } from 'react-toastify';
+import { 
+  SearchIcon, 
+  CartIcon, 
+  ProfileIcon, 
+  MenuIcon, 
+  CloseIcon, 
+  OrdersIcon, 
+  LogoutIcon, 
+  ChevronDownIcon 
+} from './NavIcons';
 
 const Navbar = ({ setShowLogin }) => {
   const [showSearch, setShowSearch] = useState(false);
@@ -97,8 +106,9 @@ const Navbar = ({ setShowLogin }) => {
                 type="button" 
                 className='mobile-drawer-close' 
                 onClick={() => setMobileMenuOpen(false)}
+                title="Close Menu"
               >
-                ✕
+                <CloseIcon size={18} />
               </button>
             </div>
 
@@ -162,6 +172,7 @@ const Navbar = ({ setShowLogin }) => {
 
       {/* Navbar Right Controls */}
       <div className="navbar-right">
+        {/* Modern Search Icon / Input */}
         <div className="navbar-search-box">
           {showSearch ? (
             <form onSubmit={handleSearchSubmit} className="navbar-search-form">
@@ -173,15 +184,15 @@ const Navbar = ({ setShowLogin }) => {
                 autoFocus 
               />
               <button type="submit" className="navbar-search-submit" title="Search">
-                <img src={assets.search_icon} alt="Search" />
+                <SearchIcon size={16} />
               </button>
               <button 
                 type="button" 
                 className="navbar-search-close" 
                 onClick={() => setShowSearch(false)}
-                title="Close"
+                title="Close Search"
               >
-                ✕
+                <CloseIcon size={14} />
               </button>
             </form>
           ) : (
@@ -189,21 +200,25 @@ const Navbar = ({ setShowLogin }) => {
               type="button" 
               className="navbar-search-toggle" 
               onClick={() => setShowSearch(true)}
-              title="Search food"
-              aria-label="Open search"
+              title="Search Dishes"
+              aria-label="Search Dishes"
             >
-              <img src={assets.search_icon} alt="Search" />
+              <SearchIcon size={20} />
             </button>
           )}
         </div>
 
-        <Link to='/cart' className='navbar-cart-icon' title="Cart">
-          <img src={assets.basket_icon} alt="Cart" />
-          {cartCount > 0 && (
-            <span className="cart-badge">{cartCount}</span>
-          )}
+        {/* Modern Cart Icon with Pulse Badge */}
+        <Link to='/cart' className='navbar-cart-icon' title="Shopping Cart" aria-label="Shopping Cart">
+          <div className="cart-icon-wrapper">
+            <CartIcon size={22} />
+            {cartCount > 0 && (
+              <span className="cart-badge">{cartCount}</span>
+            )}
+          </div>
         </Link>
 
+        {/* Modern Profile Icon / Capsule */}
         {!token ? (
           <button className="navbar-signin-btn" onClick={() => setShowLogin(true)}>
             Sign In
@@ -211,8 +226,13 @@ const Navbar = ({ setShowLogin }) => {
         ) : (
           <div className='navbar-profile'>
             <div className='navbar-avatar'>
-              <img src={assets.profile_icon} alt="Profile" />
-              {user?.name && <span className='user-name-snippet'>{user.name.split(" ")[0]}</span>}
+              <div className='profile-avatar-icon-wrap'>
+                <ProfileIcon size={18} />
+              </div>
+              {user?.name && (
+                <span className='user-name-snippet'>{user.name.split(" ")[0]}</span>
+              )}
+              <ChevronDownIcon size={12} className='dropdown-arrow' />
             </div>
             <ul className='navbar-profile-dropdown'>
               <li className='dropdown-user-greeting'>
@@ -220,31 +240,32 @@ const Navbar = ({ setShowLogin }) => {
               </li>
               <hr />
               <li onClick={() => navigate('/profile')}>
-                <img src={assets.profile_icon} alt="Profile" />
+                <ProfileIcon size={16} />
                 <p>My Profile</p>
               </li>
               <hr />
               <li onClick={() => navigate('/myorders')}>
-                <img src={assets.bag_icon} alt="Orders" />
+                <OrdersIcon size={16} />
                 <p>My Orders</p>
               </li>
               <hr />
               <li onClick={logout}>
-                <img src={assets.logout_icon} alt="Logout" />
+                <LogoutIcon size={16} />
                 <p>Logout</p>
               </li> 
             </ul>
           </div>
         )}
 
+        {/* Modern Menu ("Mintu") Icon Trigger */}
         <button 
+          type="button"
           className="mobile-hamburger" 
           onClick={() => setMobileMenuOpen(true)}
-          aria-label="Toggle navigation"
+          aria-label="Toggle menu"
+          title="Open Menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <MenuIcon size={24} />
         </button>
       </div>
     </nav>
