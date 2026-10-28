@@ -1,4 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary-color: #FF4C24;
+  --primary-hover: #e03f19;
+  --primary-active: #c42d0a;
+  --primary-light: #fff2ef;
+  --primary-light-hover: #ffe6e0;
+  --primary-border: #ffcfc4;
+  --primary-gradient: linear-gradient(135deg, #FF4C24 0%, #e03810 100%);
+  --primary-gradient-hover: linear-gradient(135deg, #e03810 0%, #c42d0a 100%);
+  --primary-shadow: rgba(255, 76, 36, 0.4);
+  --text-dark: #262626;
+  --text-muted: #666666;
+  --bg-page: #ffffff;
+}
 
 * {
   margin: 0;
@@ -8,8 +23,16 @@
   scroll-behavior: smooth;
 }
 
+::selection {
+  background-color: #ffe0d8;
+  color: #FF4C24;
+}
+
 body {
   min-height: 100vh;
+  background-color: #ffffff;
+  color: #262626;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -18,7 +41,8 @@ a {
 }
 
 .app {
-  width: 80%;
+  width: 82%;
+  max-width: 1280px;
   margin: auto;
 }
 
@@ -26,14 +50,51 @@ a {
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
 }
 
-@media (max-width:1050px) {
+/* Floating Back to Top Button */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #FF4C24;
+  color: white;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(255, 76, 36, 0.4);
+  z-index: 99;
+  transition: transform 0.2s, background-color 0.2s;
+  animation: fadeIn 0.3s ease;
+}
+
+.back-to-top-btn:hover {
+  background-color: #e03f19;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 1050px) {
   .app {
-    width: 90%;
+    width: 92%;
+  }
+}
+
+@media (max-width: 600px) {
+  .back-to-top-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
   }
 }

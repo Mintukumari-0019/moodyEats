@@ -1,16 +1,44 @@
-.verify{
+.verify-page {
     min-height: 60vh;
-    display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
 }
-.verify .spinner{
-    width: 100px;
-    height: 100px;
+
+.verify-box {
+    text-align: center;
+    background: #fafafa;
+    border: 1px solid #ebebeb;
+    border-radius: 16px;
+    padding: 50px 40px;
+    max-width: 420px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
     place-self: center;
-    border: 5px solid #bdbdbd;
-    border-top-color: tomato;
+    margin: 0 auto 24px auto;
+    border: 5px solid #f0f0f0;
+    border-top-color: #FF4C24;
     border-radius: 50%;
-    animation: rotate 1s infinite;
+    animation: rotate 1s infinite linear;
 }
+
+.verify-box h3 {
+    font-size: 20px;
+    color: #262626;
+    margin-bottom: 8px;
+}
+
+.verify-box p {
+    font-size: 14px;
+    color: #777;
+    line-height: 1.5;
+}
+
 @keyframes rotate {
     100% {
         transform: rotate(360deg);

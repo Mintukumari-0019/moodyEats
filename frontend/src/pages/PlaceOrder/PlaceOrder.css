@@ -1,70 +1,161 @@
-.place-order{
+.place-order {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 50px;
-    margin: 100px 0px;
-}
-.place-order-left{
-    width: 100%;
-    max-width: max(30%,500px);
-}
-.place-order-left .title{
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 50px;
-}
-.place-order-left input{
-    margin-bottom: 15px;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #C5C5C5;
-    border-radius: 4px;
-    outline-color: tomato;
-}
-.place-order-left .multi-field{
-    display: flex;
-    gap: 10px;
-}
-.place-order-right{
-    width: 100%;
-    max-width: max(40%,500px);
-}
-.place-order-submit{
-    margin-top: 50px;
-    border: none;
-    background-color: tomato;
-    color: white;
-    padding: 12px 30px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.payment{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 15px;
-}
-.payment h2{
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-.payment .payment-option{
-    display: flex;
-    align-items: center;
-    gap: 10px ;
-    border: 1px solid tomato;
-    padding: 15px;
-    border-radius: 4px;
-    min-width: 300px;
-    cursor: pointer;
-}
-.payment .payment-option:hover{
-    background-color:  #ffe7de;
+    margin: 40px 0px 80px 0px;
 }
 
-@media (max-width:700px) {
-    .place-order{
+.place-order-left {
+    flex: 1.2;
+    width: 100%;
+}
+
+.place-order-heading {
+    font-size: 26px;
+    font-weight: 700;
+    color: #262626;
+    margin-bottom: 24px;
+}
+
+.place-order-left input {
+    margin-bottom: 16px;
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid #dcdcdc;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    background-color: white;
+}
+
+.place-order-left input:focus {
+    border-color: #FF4C24;
+}
+
+.place-order-left .multi-field {
+    display: flex;
+    gap: 14px;
+}
+
+.place-order-right {
+    flex: 1;
+    width: 100%;
+}
+
+.place-order-summary {
+    background: #fafafa;
+    border: 1px solid #ebebeb;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-top: 15px;
+}
+
+.order-discount-row {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.order-grand-total {
+    font-size: 19px;
+    color: #262626;
+}
+
+.payment-section {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.payment-section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #262626;
+    margin-bottom: 8px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border: 1.5px solid #e0e0e0;
+    padding: 16px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s ease;
+}
+
+.payment-option:hover {
+    border-color: #FF4C24;
+    background-color: #fffaf9;
+}
+
+.payment-option.active {
+    border-color: #FF4C24;
+    background-color: #fff2ef;
+    box-shadow: 0 4px 15px rgba(255, 76, 36, 0.1);
+}
+
+.payment-radio {
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.payment-option b {
+    font-size: 14px;
+    color: #262626;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.payment-desc {
+    font-size: 12px;
+    color: #777;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.place-order-submit-btn {
+    margin-top: 25px;
+    width: 100%;
+    border: none;
+    background: linear-gradient(135deg, #FF4C24 0%, #e03810 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(255, 76, 36, 0.35);
+}
+
+.place-order-submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #e03810 0%, #c42d0a 100%);
+    transform: translateY(-2px);
+}
+
+.place-order-submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+@media (max-width: 850px) {
+    .place-order {
         flex-direction: column;
+        gap: 35px;
+    }
+}
+
+@media (max-width: 500px) {
+    .place-order-left .multi-field {
+        flex-direction: column;
+        gap: 0;
     }
 }
