@@ -1,31 +1,71 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-*{
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #FF4C24;
+  --primary-hover: #e03f19;
+  --primary-light: #fff2ef;
+  --primary-border: #ffcfc4;
+}
+
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: Outfit;
+  font-family: 'Outfit', sans-serif;
+  scroll-behavior: smooth;
 }
-body{
+
+::selection {
+  background-color: #ffe0d8;
+  color: #FF4C24;
+}
+
+body {
   min-height: 100vh;
-  background-color: #FCFCFC;
+  background-color: #fcfcfc;
+  color: #262626;
+  -webkit-font-smoothing: antialiased;
 }
-a{
+
+a {
   text-decoration: none;
   color: inherit;
 }
-hr{
+
+hr {
   border: none;
   height: 1px;
-  background-color: #A9A9A9;
+  background-color: #ebebeb;
 }
-.app-content{
+
+.app-content {
   display: flex;
+  min-height: calc(100vh - 72px);
+  background-color: #fcfcfc;
 }
-.flex-col{
+
+.app-main-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #fcfcfc;
+  min-width: 0;
+}
+
+.flex-col {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.cursor{
+
+.cursor {
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .app-content {
+    flex-direction: column;
+  }
+  .app-main-content {
+    padding-bottom: 75px;
+  }
 }
