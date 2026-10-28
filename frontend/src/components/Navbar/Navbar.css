@@ -9,6 +9,7 @@
     font-family: 'Courier New', Courier, monospace;
     font-size: 34px;
     color: #ee600d;
+    cursor: pointer;
 }
 
 .navbar-menu {
@@ -27,24 +28,111 @@
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 }
 
-.navbar-search-icon{
-position: relative;
+.navbar-search-box {
+    display: flex;
+    align-items: center;
 }
 
-.navbar-search-icon .dot{
+.navbar-search-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.navbar-search-toggle:hover {
+    transform: scale(1.1);
+}
+
+.navbar-search-toggle img {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.navbar-search-form {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    padding: 4px 10px 4px 14px;
+    gap: 6px;
+    animation: fadeIn 0.3s ease;
+}
+
+.navbar-search-form input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #49557E;
+    width: 140px;
+    font-family: inherit;
+}
+
+.navbar-search-form input::placeholder {
+    color: #999;
+}
+
+.navbar-search-submit {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search-submit img {
+    width: 16px;
+    height: 16px;
+}
+
+.navbar-search-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    font-size: 14px;
+    padding: 2px 4px;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+.navbar-search-close:hover {
+    color: #FF4C24;
+}
+
+.navbar-search-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search-icon img {
+    width: 22px;
+    height: 22px;
+}
+
+.navbar-search-icon .dot {
     position: absolute;
     min-width: 10px;
     min-height: 10px;
     background-color: #FF4C24;
     border-radius: 5px;
-    top: -8px;
-    right: -8px;
+    top: -6px;
+    right: -6px;
 }
 
-.navbar-right button {
+.navbar-signin-btn {
     background: transparent;
     font-size: 16px;
     color: #49557E;
@@ -55,33 +143,45 @@ position: relative;
     transition: 0.3s;
 }
 
-.navbar-right button:hover {
+.navbar-signin-btn:hover {
     background: #fff4f2;
 }
 
-.navbar-profile{
+.navbar-profile {
     position: relative;
-
+    cursor: pointer;
 }
-.navbar-profile-dropdown{
+
+.navbar-profile img {
+    width: 24px;
+    height: 24px;
+}
+
+.navbar-profile-dropdown {
     position: absolute;
     display: none;
     right: 0;
-    z-index: 1;
+    z-index: 10;
 }
-.navbar-profile-dropdown li{
+
+.navbar-profile-dropdown li {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    white-space: nowrap;
 }
-.navbar-profile-dropdown img{
+
+.navbar-profile-dropdown img {
     width: 20px;
+    height: 20px;
 }
-.navbar-profile-dropdown li:hover{
+
+.navbar-profile-dropdown li:hover {
     color: #FF4C24;
 }
-.navbar-profile:hover .navbar-profile-dropdown{
+
+.navbar-profile:hover .navbar-profile-dropdown {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -92,14 +192,16 @@ position: relative;
     outline: 2px solid white;
     list-style: none;
 }
-.navbar-profile hr{
+
+.navbar-profile hr {
     background-color: gray;
     height: 1px;
     border: none;
 }
-@media (max-width:1050px) {
+
+@media (max-width: 1050px) {
     .navbar .logo {
-        width: 140px;
+        font-size: 28px;
     }
 
     .navbar-menu {
@@ -108,21 +210,22 @@ position: relative;
     }
 
     .navbar-right {
-        gap: 30px;
+        gap: 20px;
     }
 
     .navbar-right img {
-        width: 22px;
+        width: 20px;
+        height: 20px;
     }
 
-    .navbar-right button {
+    .navbar-signin-btn {
         padding: 8px 25px;
     }
 }
 
-@media (max-width:900px) {
+@media (max-width: 900px) {
     .navbar .logo {
-        width: 120px;
+        font-size: 24px;
     }
 
     .navbar-menu {
@@ -131,21 +234,25 @@ position: relative;
     }
 
     .navbar-right {
-        gap: 20px;
+        gap: 15px;
     }
 
-    .navbar-right img {
-        width: 20px;
+    .navbar-search-form input {
+        width: 110px;
     }
 
-    .navbar-right button {
+    .navbar-signin-btn {
         font-size: 15px;
         padding: 7px 20px;
     }
 }
 
-@media (max-width:750px) {
+@media (max-width: 750px) {
     .navbar-menu {
         display: none;
+    }
+
+    .navbar-search-form input {
+        width: 90px;
     }
 }

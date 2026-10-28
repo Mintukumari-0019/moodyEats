@@ -2,9 +2,12 @@
     height: 34vw;
     margin: 30px auto;
     background: url('/header_img.png') no-repeat;
-    background-size:contain;
+    background-size: contain;
     position: relative;
+    border-radius: 20px;
+    overflow: hidden;
 }
+
 .header-contents{
     position: absolute;
     display: flex;
@@ -14,42 +17,168 @@
     max-width: 50%;
     bottom: 10%;
     left: 6vw;
-    animation: fadeIn 3s;
+    animation: fadeIn 1.5s ease-in-out;
 }
+
 .header-contents h2{
-    font-weight:500;
+    font-weight: 600;
     color: white;
-    font-size: max(4.5vw,22px);
+    font-size: max(4.2vw, 22px);
+    line-height: 1.15;
 }
+
 .header-contents p{
     color: white;
     font-size: 1vw;
+    line-height: 1.4;
 }
-.header-contents button{
+
+.header-search {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 50px;
+    padding: 4px 6px 4px 18px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.header-search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: max(0.9vw, 13px);
+    color: #333;
+    background: transparent;
+    padding: 6px 4px;
+    font-family: inherit;
+    min-width: 0;
+}
+
+.header-search input::placeholder {
+    color: #888;
+}
+
+.header-search .header-search-btn {
+    border: none;
+    background-color: #FF4C24;
+    color: white;
+    font-weight: 600;
+    padding: 0.8vw 2vw;
+    font-size: max(0.9vw, 13px);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    white-space: nowrap;
+}
+
+.header-search .header-search-btn:hover {
+    background-color: #e03f19;
+}
+
+.header-search .header-search-btn:active {
+    transform: scale(0.97);
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.header-view-menu-btn {
     border: none;
     color: #747474;
     font-weight: 500;
-    padding: 1vw 2.3vw;
+    padding: 0.8vw 2.2vw;
     background: white;
-    font-size: max(1vw,13px);
+    font-size: max(0.9vw, 13px);
     border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
-@media (max-width:1050px) {
-    .header{
+
+.header-view-menu-btn:hover {
+    background: #fff4f2;
+    color: #FF4C24;
+    transform: translateY(-1px);
+}
+
+.header-clear-btn {
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    color: white;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    padding: 0.8vw 1.8vw;
+    font-size: max(0.85vw, 12px);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.header-clear-btn:hover {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 1050px) {
+    .header {
         height: 38vw;
     }
-    .header-contents{
-        max-width: 45%;
+    .header-contents {
+        max-width: 48%;
+        gap: 1.2vw;
     }
 }
-@media(max-width:750px){
-    .header-contents{
-        max-width: 55%;
+
+@media (max-width: 750px) {
+    .header {
+        height: 52vw;
     }
-    .header-contents p{
-       display: none;
+    .header-contents {
+        max-width: 78%;
+        bottom: 8%;
+        gap: 10px;
     }
-    .header-contents button{
-        padding: 2vw 4vw;
+    .header-contents p {
+        display: none;
+    }
+    .header-search {
+        padding: 3px 4px 3px 14px;
+        max-width: 100%;
+    }
+    .header-search input {
+        font-size: 12px;
+        padding: 4px 0;
+    }
+    .header-search .header-search-btn {
+        padding: 6px 14px;
+        font-size: 11px;
+    }
+    .header-view-menu-btn {
+        padding: 6px 14px;
+        font-size: 11px;
+    }
+    .header-clear-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        height: 64vw;
+        border-radius: 12px;
+    }
+    .header-contents {
+        max-width: 88%;
+        left: 5vw;
+        bottom: 6%;
+        gap: 8px;
+    }
+    .header-contents h2 {
+        font-size: 18px;
     }
 }
