@@ -77,6 +77,13 @@ const Navbar = ({ setShowLogin }) => {
           home
         </Link>
         <span 
+          className='nav-link-btn nav-predictor-pill' 
+          onClick={() => navigateToSection('food-predictor')}
+          title="Predict what to eat today"
+        >
+          🔮 Predict Meal
+        </span>
+        <span 
           className='nav-link-btn' 
           onClick={() => navigateToSection('explore-menu')}
         >
@@ -120,6 +127,9 @@ const Navbar = ({ setShowLogin }) => {
               >
                 🏠 Home
               </Link>
+              <span onClick={() => navigateToSection('food-predictor')}>
+                🔮 Aaj Kya Khayein? (Predict Meal)
+              </span>
               <span onClick={() => navigateToSection('explore-menu')}>
                 🍽️ Explore Menu
               </span>

@@ -9,6 +9,7 @@ import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 import MyOrders from './pages/MyOrders/MyOrders';
 import Contact from './pages/Contact/Contact';
 import Profile from './pages/Profile/Profile';
+import FloatingPredictorWidget from './components/FoodPredictor/FloatingPredictorWidget';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify/Verify';
@@ -51,6 +52,7 @@ const App = () => {
         </Routes>
       </div>
       <Footer />
+      <FloatingPredictorWidget />
 
       {showBackToTop && (
         <button 

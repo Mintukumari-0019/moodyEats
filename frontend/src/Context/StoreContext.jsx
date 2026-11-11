@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import { food_list as defaultFoodList, menu_list } from "../assets/assets";
 import axios from "axios";
+import { fetchAllFoods, subscribeToFoodUpdates } from "../services/foodService";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-    const url = import.meta.env.VITE_API_URL;
+    const url = import.meta.env.VITE_API_URL || "http://localhost:4000";
     const [food_list, setFoodList] = useState(defaultFoodList);
     const [cartItems, setCartItems] = useState({});
     const [token, setToken] = useState("");
@@ -134,12 +135,12 @@ const StoreContextProvider = (props) => {
 
     const fetchFoodList = async () => {
         try {
-            const response = await axios.get(url + "/api/food/list");
-            if (response.data && response.data.data && response.data.data.length > 0) {
-                setFoodList(response.data.data);
+            const foods = await fetchAllFoods(url);
+            if (foods && foods.length > 0) {
+                setFoodList(foods);
             }
         } catch (error) {
-            console.log("Backend not available, using default items:", error.message);
+            console.log("Error loading food list:", error.message);
         }
     };
 
@@ -172,6 +173,15 @@ const StoreContextProvider = (props) => {
             }
         }
         loadData();
+
+        // Real-time synchronization when Admin adds/updates/removes food items
+        const unsubscribe = subscribeToFoodUpdates(() => {
+            fetchFoodList();
+        });
+
+        return () => {
+            unsubscribe();
+        };
     }, []);
 
     const contextValue = {

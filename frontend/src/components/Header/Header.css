@@ -228,6 +228,29 @@
     margin-top: 4px;
 }
 
+.header-predictor-cta {
+    background: linear-gradient(135deg, #FF4C24 0%, #ff6b4a 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 18px rgba(255, 76, 36, 0.45);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.header-predictor-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(255, 76, 36, 0.65);
+    background: linear-gradient(135deg, #ff3b10 0%, #ff5b35 100%);
+    color: white;
+}
+
 .header-menu-cta {
     background: white;
     color: #1e293b;

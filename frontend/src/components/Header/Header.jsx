@@ -93,6 +93,9 @@ const Header = () => {
                 </div>
 
                 <div className='header-cta-row'>
+                    <a href='#food-predictor' className='header-predictor-cta'>
+                        <span>🔮 Aaj Kya Khayein? (Predict Food)</span>
+                    </a>
                     <a href='#explore-menu' className='header-menu-cta'>
                         <span>Explore Menu</span>
                         <span className='cta-arrow'>↓</span>

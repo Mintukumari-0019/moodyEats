@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>MoodyEats Real-Time Cross-Origin Data Synchronizer</title>
+</head>
+<body>
+  <script>
+    const STORAGE_KEY_CUSTOM = 'moodyeats_custom_foods';
+    const STORAGE_KEY_DELETED = 'moodyeats_deleted_ids';
+    const STORAGE_KEY_UPDATED = 'moodyeats_updated_foods';
+
+    let bc;
+    try {
+      bc = new BroadcastChannel('moodyeats_sync_channel');
+    } catch (e) {
+      // BroadcastChannel fallback if unsupported
+    }
+
+    function getLocalData() {
+      try {
+        const customFoods = JSON.parse(localStorage.getItem(STORAGE_KEY_CUSTOM) || '[]');
+        const deletedIds = JSON.parse(localStorage.getItem(STORAGE_KEY_DELETED) || '[]');
+        const updatedFoods = JSON.parse(localStorage.getItem(STORAGE_KEY_UPDATED) || '[]');
+        return { customFoods, deletedIds, updatedFoods };
+      } catch (err) {
+        return { customFoods: [], deletedIds: [], updatedFoods: [] };
+      }
+    }
+
+    function sendToParent(type, payload = {}) {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type, ...payload }, '*');
+      }
+    }
+
+    window.addEventListener('message', (event) => {
+      const data = event.data;
+      if (!data || typeof data !== 'object') return;
+
+      if (data.type === 'MOODYEATS_SAVE_DATA') {
+        try {
+          if (Array.isArray(data.customFoods)) {
+            localStorage.setItem(STORAGE_KEY_CUSTOM, JSON.stringify(data.customFoods));
+          }
+          if (Array.isArray(data.deletedIds)) {
+            localStorage.setItem(STORAGE_KEY_DELETED, JSON.stringify(data.deletedIds));
+          }
+          if (Array.isArray(data.updatedFoods)) {
+            localStorage.setItem(STORAGE_KEY_UPDATED, JSON.stringify(data.updatedFoods));
+          }
+          if (bc) {
+            bc.postMessage({ type: 'FOODS_UPDATED', timestamp: Date.now() });
+          }
+          sendToParent('MOODYEATS_SAVE_SUCCESS', { ok: true, timestamp: Date.now() });
+        } catch (err) {
+          console.error('[MoodyEats Sync] Error saving localStorage:', err);
+          sendToParent('MOODYEATS_SAVE_ERROR', { error: err.message });
+        }
+      }
+
+      if (data.type === 'MOODYEATS_GET_DATA') {
+        const local = getLocalData();
+        sendToParent('MOODYEATS_DATA_RESPONSE', local);
+      }
+    });
+
+    // Notify parent immediately when frame is loaded
+    const initial = getLocalData();
+    sendToParent('MOODYEATS_SYNC_READY', initial);
+  </script>
+</body>
+</html>
