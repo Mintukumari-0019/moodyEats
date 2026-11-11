@@ -114,4 +114,29 @@ const removeFood = async (req, res) => {
     }
 };
 
-export { listFood, addFood, updateFood, removeFood };
+// Predict / Recommend food
+const predictFood = async (req, res) => {
+    try {
+        const { mood = 'happy', mealTime = 'dinner', craving = 'all', dietary = 'all' } = req.query;
+        const foods = await foodModel.find({});
+
+        let eligible = foods;
+        if (dietary === 'veg') {
+            eligible = foods.filter(f => !f.name.toLowerCase().includes('chicken') && f.category.toLowerCase() !== 'meat');
+        } else if (dietary === 'nonveg') {
+            eligible = foods.filter(f => f.name.toLowerCase().includes('chicken'));
+        }
+        if (eligible.length === 0) eligible = foods;
+
+        res.json({
+            success: true,
+            data: eligible.slice(0, 5),
+            meta: { mood, mealTime, craving, dietary }
+        });
+    } catch (error) {
+        console.error("Predict food error:", error);
+        res.status(500).json({ success: false, message: "Failed to predict food" });
+    }
+};
+
+export { listFood, addFood, updateFood, removeFood, predictFood };
