@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Add.css';
-import { assets, url, currency } from '../../assets/assets';
-import axios from 'axios';
+import { assets, currency } from '../../assets/assets';
 import { toast } from 'react-toastify';
+import { addFood } from '../../services/foodService';
 
 const Add = () => {
     const [image, setImage] = useState(false);
@@ -34,16 +34,16 @@ const Add = () => {
 
         setLoading(true);
         try {
-            const formData = new FormData();
-            formData.append("name", data.name.trim());
-            formData.append("description", data.description.trim());
-            formData.append("price", Number(data.price));
-            formData.append("category", data.category);
-            formData.append("image", image);
+            const res = await addFood({
+                name: data.name,
+                description: data.description,
+                price: data.price,
+                category: data.category,
+                imageFile: image
+            });
 
-            const response = await axios.post(`${url}/api/food/add`, formData);
-            if (response.data.success) {
-                toast.success(response.data.message || 'Food item added successfully!');
+            if (res.success) {
+                toast.success(res.message);
                 setData({
                     name: "",
                     description: "",
@@ -52,11 +52,11 @@ const Add = () => {
                 });
                 setImage(false);
             } else {
-                toast.error(response.data.message || 'Failed to add food item');
+                toast.error(res.message || 'Failed to add food item');
             }
         } catch (error) {
             console.error("Add food error:", error);
-            toast.error(error.response?.data?.message || 'Server connection error. Make sure backend is running.');
+            toast.error('Failed to save food item');
         } finally {
             setLoading(false);
         }

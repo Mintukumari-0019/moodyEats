@@ -4,6 +4,7 @@ import axios from 'axios';
 import { url, currency } from '../../assets/assets';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { fetchAllFoods } from '../../services/foodService';
 
 const Dashboard = () => {
   const [foods, setFoods] = useState([]);
@@ -14,13 +15,13 @@ const Dashboard = () => {
   const fetchStats = async () => {
     try {
       setLoading(true);
-      const [foodsRes, ordersRes] = await Promise.allSettled([
-        axios.get(`${url}/api/food/list`),
-        axios.get(`${url}/api/order/list`)
+      const [foodsData, ordersRes] = await Promise.allSettled([
+        fetchAllFoods(),
+        axios.get(`${url}/api/order/list`, { timeout: 3000 })
       ]);
 
-      if (foodsRes.status === "fulfilled" && foodsRes.value.data.success) {
-        setFoods(foodsRes.value.data.data || []);
+      if (foodsData.status === "fulfilled") {
+        setFoods(foodsData.value || []);
       }
       if (ordersRes.status === "fulfilled" && ordersRes.value.data.success) {
         setOrders(ordersRes.value.data.data || []);

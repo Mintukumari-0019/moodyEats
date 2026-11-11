@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -8,8 +8,13 @@ import List from './pages/List/List';
 import Orders from './pages/Orders/Orders';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { initSync } from './services/foodService';
 
 const App = () => {
+  useEffect(() => {
+    initSync();
+  }, []);
+
   return (
     <div className='app'>
       <ToastContainer position="top-right" autoClose={3000} />

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './List.css';
 import { url, currency, assets } from '../../assets/assets';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import { fetchAllFoods, removeFood as removeFoodService, updateFood as updateFoodService } from '../../services/foodService';
 
 const List = () => {
   const [list, setList] = useState([]);
@@ -20,15 +20,11 @@ const List = () => {
   const fetchList = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${url}/api/food/list`);
-      if (response.data.success) {
-        setList(response.data.data || []);
-      } else {
-        toast.error("Failed to fetch food list");
-      }
+      const foods = await fetchAllFoods();
+      setList(foods || []);
     } catch (error) {
       console.error("Fetch list error:", error);
-      toast.error("Could not connect to server");
+      toast.error("Could not load inventory");
     } finally {
       setLoading(false);
     }
@@ -39,12 +35,12 @@ const List = () => {
       return;
     }
     try {
-      const response = await axios.post(`${url}/api/food/remove`, { id: foodId });
-      if (response.data.success) {
-        toast.success(response.data.message || "Food item deleted");
+      const res = await removeFoodService(foodId, foodName);
+      if (res.success) {
+        toast.success(res.message);
         await fetchList();
       } else {
-        toast.error(response.data.message || "Failed to remove food item");
+        toast.error(res.message || "Failed to remove food item");
       }
     } catch (error) {
       console.error("Remove food error:", error);
@@ -82,28 +78,27 @@ const List = () => {
 
     setEditLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("id", editingItem._id);
-      formData.append("name", editingItem.name.trim());
-      formData.append("description", (editingItem.description || '').trim());
-      formData.append("price", Number(editingItem.price));
-      formData.append("category", editingItem.category);
-      if (editImage) {
-        formData.append("image", editImage);
-      }
+      const res = await updateFoodService({
+        id: editingItem._id,
+        name: editingItem.name,
+        description: editingItem.description,
+        price: editingItem.price,
+        category: editingItem.category,
+        imageFile: editImage,
+        currentImage: editingItem.currentImage
+      });
 
-      const response = await axios.post(`${url}/api/food/update`, formData);
-      if (response.data.success) {
-        toast.success(response.data.message || "Food item updated successfully!");
+      if (res.success) {
+        toast.success(res.message);
         setEditingItem(null);
         setEditImage(null);
         await fetchList();
       } else {
-        toast.error(response.data.message || "Failed to update item");
+        toast.error(res.message || "Failed to update item");
       }
     } catch (error) {
       console.error("Update food error:", error);
-      toast.error(error.response?.data?.message || "Failed to save changes");
+      toast.error("Failed to save changes");
     } finally {
       setEditLoading(false);
     }
@@ -120,7 +115,9 @@ const List = () => {
   });
 
   const getImageSrc = (image) => {
-    if (typeof image === 'string' && (image.startsWith('/') || image.startsWith('http') || image.startsWith('data:'))) {
+    if (!image) return assets.upload_area;
+    if (typeof image === 'object' && image.default) image = image.default;
+    if (typeof image === 'string' && (image.startsWith('/') || image.startsWith('http') || image.startsWith('data:') || image.startsWith('blob:'))) {
       return image;
     }
     return `${url}/images/${image}`;
